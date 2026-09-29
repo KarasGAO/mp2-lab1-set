@@ -1,3 +1,4 @@
+
 // Copyright 2008, Google Inc.
 // All rights reserved.
 //
@@ -976,7 +977,7 @@ class GTEST_API_ UnitTestImpl {
   // Returns true iff the unit test passed (i.e. all test cases passed).
   bool Passed() const { return !Failed(); }
 
-  // Returns true iff the unit test failed (i.e. some test case failed
+  // Returns true iff the unit test failed (i.e. some test case failed 
   // or something outside of all tests failed).
   bool Failed() const {
     return failed_test_case_count() > 0 || ad_hoc_test_result()->Failed();
