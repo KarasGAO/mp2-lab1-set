@@ -13,7 +13,7 @@ static TBitField FAKE_BITFIELD(1);
 
 TBitField::TBitField(int len)
 {
-    if (len < 0) //{ throw std::out_of_range("Length < 0"); }
+   // if (len < 0) //{ throw std::out_of_range("Length < 0"); }
     BitLen = len;
     MemLen = (len + sizeof(TELEM) * 8 - 1) / (sizeof(TELEM) * 8);
     if (MemLen == 0) { MemLen = 1; }
@@ -119,12 +119,34 @@ int TBitField::operator!=(const TBitField &bf) const // сравнение
 
 TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 {
-    *this = *this | bf;
+    int len = BitLen;
+    if (bf.BitLen > len) {
+        len = bf.BitLen;
+    }
+    TBitField tmp(len);
+    for (int i = 0; i < MemLen; ++i) {
+        tmp.pMem[i] = pMem[i];
+    }
+    for (int i = 0; i < bf.MemLen; ++i) {
+        tmp.pMem[i] |= bf.pMem[i];
+    }
+    return tmp;
 }
 
 TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 {
-    *this = *this & bf;
+    int len = BitLen;
+    if (bf.BitLen > len) {
+        len = bf.BitLen;
+    }
+    TBitField tmp(len);
+    for (int i = 0; i < MemLen; ++i) {
+        tmp.pMem[i] = pMem[i];
+    }
+    for (int i = 0; i < bf.MemLen; ++i) {
+        tmp.pMem[i] &= bf.pMem[i];
+    }
+    return tmp;
 }
 
 TBitField TBitField::operator~(void) // отрицание
